@@ -1,35 +1,29 @@
 ﻿using System;
 using System.Text;
-using System.Threading;
 using PlayerIOClient;
 
 namespace BitSend
 {
     public class BitSendClient
     {
-        private readonly UserManager _userManager = new UserManager();
-        private readonly ReceiveManager _receiveManager = new ReceiveManager();
-        private readonly SendManager _sendManager;
         private readonly Connection _connection;
         private readonly int _myUserId;
+        private readonly ReceiveManager _receiveManager = new ReceiveManager();
+        private readonly SendManager _sendManager;
+        private readonly UserManager _userManager = new UserManager();
 
         public BitSendClient(Connection connection, int myUserId)
         {
-            this._sendManager = new SendManager(this);
+            this._sendManager = new SendManager(connection);
             this._connection = connection;
             this._myUserId = myUserId;
-            this._connection.OnMessage += _connection_OnMessage;
-            this.SendPacket((int)Packet.Hai);
+            this._connection.OnMessage += this._connection_OnMessage;
+            this._sendManager.Send(Packet.Hai);
         }
 
         public void Send(byte[] bytes)
         {
             this._sendManager.Send(bytes);
-        }
-
-        internal void SendPacket(int packet)
-        {
-            this._connection.Send("c", packet, 0, 0);
         }
 
         private void _connection_OnMessage(object sender, Message e)
@@ -51,12 +45,12 @@ namespace BitSend
             switch (packet)
             {
                 case Packet.Hai:
-                    if (userId == _myUserId) break;
-                    this.SendPacket((int)Packet.Hey);
+                    if (userId == this._myUserId) break;
+                    this._sendManager.Send(Packet.Hey);
                     goto case Packet.Hey;
 
                 case Packet.Hey:
-                    if (userId == _myUserId) break;
+                    if (userId == this._myUserId) break;
                     this._userManager.AddUser(userId);
                     break;
 
@@ -66,8 +60,8 @@ namespace BitSend
 
                 case Packet.BreakChunk:
                     if (!this._userManager.Contains(userId)) break;
-                    var bytes = this._receiveManager.BreakChunk(userId);
-                    var str = Encoding.Unicode.GetString(bytes);
+                    byte[] bytes = this._receiveManager.BreakChunk(userId);
+                    string str = Encoding.Unicode.GetString(bytes);
                     Console.WriteLine(str);
                     break;
 
@@ -76,7 +70,7 @@ namespace BitSend
                     {
                         this._receiveManager.HandlePacket(userId, (ChunkPacket)packet);
                     }
-                    else if (userId == _myUserId)
+                    else if (userId == this._myUserId)
                     {
                         this._sendManager.HandlePacket((ChunkPacket)packet);
                     }

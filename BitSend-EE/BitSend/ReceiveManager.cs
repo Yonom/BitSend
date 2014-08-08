@@ -23,13 +23,13 @@ namespace BitSend
         private static void RepairChunk(Chunk chunk)
         {
             // Inserts all missed packets
-            for (var i = chunk.Count - 1; i >= 0; i--)
+            for (int i = chunk.Count - 1; i >= 0; i--)
             {
-                var packet = chunk[i];
-                var type = packet.GetPacketType();
+                ChunkPacket packet = chunk[i];
+                ChunkPacket type = packet.GetPacketType();
                 if (type == ChunkPacket.Restore)
                 {
-                    var pointerPacket = chunk[i - 1];
+                    ChunkPacket pointerPacket = chunk[i - 1];
                     var pointer = (int)(pointerPacket & ~(ChunkPacket.Data));
                     if (pointer < 0 || pointer > i) // i - 1 because every restore message is two packets long
                         throw new InvalidDataException("Received invalid pointer.");
@@ -49,21 +49,19 @@ namespace BitSend
         {
             RepairChunk(chunk);
 
-            var writePointer = 0;
+            int writePointer = 0;
             var a = new BitArray(chunk.Count * 30); // Max possible amount (30 bits per packet)
 
-            foreach (var packet in chunk)
+            foreach (ChunkPacket packet in chunk)
             {
-                var readCount = 30;
-                var readPointer = 0;
+                int readCount = 30;
+                int readPointer = 0;
                 var vector = new BitVector32((int)packet);
 
                 // Find the starting point of the data
-                while (vector[1 << readCount])
+                while (vector[1 << readCount--])
                 {
-                    readCount--;
                 }
-                readCount--; // decrease one last time to skip the first 0
 
                 // Copy the data
                 while (readPointer <= readCount)
