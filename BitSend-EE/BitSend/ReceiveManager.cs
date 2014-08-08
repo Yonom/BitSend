@@ -8,10 +8,10 @@ namespace BitSend
 {
     internal class ReceiveManager
     {
-        private readonly Dictionary<int, Chunk> _chunks = new Dictionary<int, Chunk>();
+        private readonly Dictionary<int, List<int>> _chunks = new Dictionary<int, List<int>>();
 
         // Inserts all missed packets
-        private static void RepairChunk(Chunk chunk)
+        private static void RepairChunk(List<int> chunk)
         {
             for (int i = chunk.Count - 1; i >= 0; i--)
             {
@@ -29,7 +29,7 @@ namespace BitSend
             }
         }
 
-        private static byte[] ParseChunk(Chunk chunk)
+        private static byte[] ParseChunk(List<int> chunk)
         {
             RepairChunk(chunk);
 
@@ -61,7 +61,7 @@ namespace BitSend
 
         public void StartChunk(int userId)
         {
-            var chunk = new Chunk();
+            var chunk = new List<int>();
             this._chunks.Add(userId, chunk);
         }
 

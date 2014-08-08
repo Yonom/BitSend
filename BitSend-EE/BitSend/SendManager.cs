@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Threading;
 using PlayerIOClient;
@@ -12,7 +13,7 @@ namespace BitSend
         private readonly AutoResetEvent _resetEvent = new AutoResetEvent(false);
 
         private bool[] _check;
-        private Chunk _chunk;
+        private List<int> _chunk;
         private int _lastPos;
         private int _pointer;
         private int _offsetAdd;
@@ -22,9 +23,9 @@ namespace BitSend
             this._connection = connection;
         }
 
-        private Chunk Parse(byte[] bytes)
+        private List<int> Parse(byte[] bytes)
         {
-            var chunk = new Chunk();
+            var chunk = new List<int>();
 
             int readPointer = 0;
             var a = new BitArray(bytes);
@@ -121,9 +122,9 @@ namespace BitSend
             Thread.Sleep(10);
         }
 
-        private static Chunk GetRepairChunk(Chunk chunk, bool[] check, ref int offsetAdd)
+        private static List<int> GetRepairChunk(List<int> chunk, bool[] check, ref int offsetAdd)
         {
-            var repairChunk = new Chunk();
+            var repairChunk = new List<int>();
             for (int i = 0; i < chunk.Count; i++)
             {
                 if (check[i]) continue;
