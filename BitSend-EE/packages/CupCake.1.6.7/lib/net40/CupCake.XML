@@ -1,0 +1,885 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CupCake</name>
+    </assembly>
+    <members>
+        <member name="T:CupCake.Chatter">
+            <summary>
+            Class Chatter.
+            Wraps a ChatService class and outputs customized messages with the given prefix.
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.#ctor(CupCake.Chat.ChatService,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CupCake.Chatter"/> class.
+            </summary>
+            <param name="chatService">The chat service being wrapped.</param>
+            <param name="name">The prefix used for sending messages.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Chat(System.String)">
+            <summary>
+            Sends the specified chat message with the current chat style.
+            </summary>
+            <param name="msg">The chat message.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Chat(System.String,System.Object[])">
+            <summary>
+            Sends the specified chat message with the current chat style.
+            </summary>
+            <param name="msg">The chat message.</param>
+            <param name="args">The object array that contains zero or more items to format.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Send(System.String)">
+            <summary>
+            Sends the specified chat message without formatting.
+            </summary>
+            <param name="msg">The chat message.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Send(System.String,System.Object[])">
+            <summary>
+            Sends the specified chat message without formatting.
+            </summary>
+            <param name="msg">The chat message.</param>
+            <param name="args">The object array that contains zero or more items to format.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Reply(System.String,System.String)">
+            <summary>
+            Sends a message with reply formatting, targeting the specified username.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="msg">The chat message.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Reply(System.String,System.String,System.Object[])">
+            <summary>
+            Sends a message with reply formatting, targeting the specified username.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="msg">The chat message.</param>
+            <param name="args">The object array that contains zero or more items to format.</param>
+        </member>
+        <member name="M:CupCake.Chatter.GiveEdit(System.String)">
+            <summary>
+            Gives edit to the specified username.
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.RemoveEdit(System.String)">
+            <summary>
+            Removes edit from the specified username.
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Teleport(System.String)">
+            <summary>
+            Teleports the specified username to the bot's location. (/teleport &lt;username&gt;).
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Teleport(System.String,System.Int32,System.Int32)">
+            <summary>
+            Teleports the specified username. (/teleport &lt;username&gt; &lt;x&gt; &lt;y&gt;).
+            </summary>
+            <param name="username">The username.</param>
+            <param name="x">The x.</param>
+            <param name="y">The y.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Kick(System.String)">
+            <summary>
+            Kicks the specified username. (/kick &lt;username&gt;).
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Kick(System.String,System.String)">
+            <summary>
+            Kicks the specified username. (/kick &lt;username&gt; &lt;reason&gt;).
+            </summary>
+            <param name="username">The username.</param>
+            <param name="reason">The kick reason.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Kick(System.String,System.String,System.Object[])">
+            <summary>
+            Kicks the specified username. (/kick &lt;username&gt; &lt;reason&gt;).
+            </summary>
+            <param name="username">The username.</param>
+            <param name="reason">The kick reason.</param>
+            <param name="args">The object array that contains zero or more items to format.</param>
+        </member>
+        <member name="M:CupCake.Chatter.KickGuests">
+            <summary>
+            Silently kicks all guests (/kickguests).
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.Kill(System.String)">
+            <summary>
+            Kills the specified username. (/kill &lt;username&gt;).
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Mute(System.String)">
+            <summary>
+            Mutes the specified username. (/mute &lt;username&gt;).
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.Unmute(System.String)">
+            <summary>
+            Unmutes the specified username. (/unmute &lt;username&gt;).
+            </summary>
+            <param name="username">The username.</param>
+        </member>
+        <member name="M:CupCake.Chatter.ReportAbuse(System.String,System.String)">
+            <summary>
+            Reports the specified user with the given reason (/reportabuse &lt;username&gt; &lt;reason&gt;).
+            </summary>
+            <param name="username">The username.</param>
+            <param name="reason">The reason.</param>
+        </member>
+        <member name="M:CupCake.Chatter.KillAll">
+            <summary>
+            Kills all the users in the world (/killemall).
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.Reset">
+            <summary>
+            Resets all the users' positions (/reset).
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.Respawn">
+            <summary>
+            Respawns the bot (/respawn).
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.RespawnAll">
+            <summary>
+            Respawns all users in the world (/respawnall).
+            </summary>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOn(System.String[])">
+            <summary>
+            Enables the given potions (/potionson &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOn(System.Int32[])">
+            <summary>
+            Enables the given potions (/potionson &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOn(CupCake.Messages.User.Potion[])">
+            <summary>
+            Enables the given potions (/potionson &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOff(System.String[])">
+            <summary>
+            Disables the given potions (/potionsoff &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOff(System.Int32[])">
+            <summary>
+            Disables the given potions (/potionsoff &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.PotionsOff(CupCake.Messages.User.Potion[])">
+            <summary>
+            Disables the given potions (/potionsoff &lt;potion1&gt; &lt;potion2&gt; ...).
+            </summary>
+            <param name="potions">The potions.</param>
+        </member>
+        <member name="M:CupCake.Chatter.ChangeVisibility(System.Boolean)">
+            <summary>
+            Changes the visibility of the room (/visible &lt;visible&gt;).
+            </summary>
+            <param name="visible">if set to <c>true</c> [visible].</param>
+        </member>
+        <member name="M:CupCake.Chatter.LoadLevel">
+            <summary>
+            Loads the level to the most recent saved version (/loadlevel).
+            </summary>
+        </member>
+        <member name="P:CupCake.Chatter.ChatService">
+            <summary>
+            Gets the chat service.
+            </summary>
+            <value>The chat service.</value>
+        </member>
+        <member name="P:CupCake.Chatter.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+            <value>The name.</value>
+        </member>
+        <member name="T:JetBrains.Annotations.CanBeNullAttribute">
+            <summary>
+                Indicates that the value of the marked element could be <c>null</c> sometimes,
+                so the check for <c>null</c> is necessary before its usage
+            </summary>
+            <example>
+                <code>
+            [CanBeNull] public object Test() { return null; }
+            public void UseTest() {
+              var p = Test();
+              var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.NotNullAttribute">
+            <summary>
+                Indicates that the value of the marked element could never be <c>null</c>
+            </summary>
+            <example>
+                <code>
+            [NotNull] public object Foo() {
+              return null; // Warning: Possible 'null' assignment
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.StringFormatMethodAttribute">
+            <summary>
+                Indicates that the marked method builds string by format pattern and (optional) arguments.
+                Parameter, which contains format string, should be given in constructor. The format string
+                should be in <see cref="M:System.String.Format(System.IFormatProvider,System.String,System.Object[])"/>-like form
+            </summary>
+            <example>
+                <code>
+            [StringFormatMethod("message")]
+            public void ShowError(string message, params object[] args) { /* do something */ }
+            public void Foo() {
+              ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
+            }
+            </code>
+            </example>
+        </member>
+        <member name="M:JetBrains.Annotations.StringFormatMethodAttribute.#ctor(System.String)">
+            <param name="formatParameterName">
+                Specifies which parameter of an annotated method should be treated as format-string
+            </param>
+        </member>
+        <member name="T:JetBrains.Annotations.InvokerParameterNameAttribute">
+            <summary>
+                Indicates that the function argument should be string literal and match one
+                of the parameters of the caller function. For example, ReSharper annotates
+                the parameter of <see cref="T:System.ArgumentNullException"/>
+            </summary>
+            <example>
+                <code>
+            public void Foo(string param) {
+              if (param == null)
+                throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.NotifyPropertyChangedInvocatorAttribute">
+            <summary>
+                Indicates that the method is contained in a type that implements
+                <see cref="T:System.ComponentModel.INotifyPropertyChanged"/> interface
+                and this method is used to notify that some property value changed
+            </summary>
+            <remarks>
+                The method should be non-static and conform to one of the supported signatures:
+                <list>
+                    <item>
+                        <c>NotifyChanged(string)</c>
+                    </item>
+                    <item>
+                        <c>NotifyChanged(params string[])</c>
+                    </item>
+                    <item>
+                        <c>NotifyChanged{T}(Expression{Func{T}})</c>
+                    </item>
+                    <item>
+                        <c>NotifyChanged{T,U}(Expression{Func{T,U}})</c>
+                    </item>
+                    <item>
+                        <c>SetProperty{T}(ref T, T, string)</c>
+                    </item>
+                </list>
+            </remarks>
+            <example>
+                <code>
+             public class Foo : INotifyPropertyChanged {
+               public event PropertyChangedEventHandler PropertyChanged;
+               [NotifyPropertyChangedInvocator]
+               protected virtual void NotifyChanged(string propertyName) { ... }
+            
+               private string _name;
+               public string Name {
+                 get { return _name; }
+                 set { _name = value; NotifyChanged("LastName"); /* Warning */ }
+               }
+             }
+             </code>
+                Examples of generated notifications:
+                <list>
+                    <item>
+                        <c>NotifyChanged("Property")</c>
+                    </item>
+                    <item>
+                        <c>NotifyChanged(() =&gt; Property)</c>
+                    </item>
+                    <item>
+                        <c>NotifyChanged((VM x) =&gt; x.Property)</c>
+                    </item>
+                    <item>
+                        <c>SetProperty(ref myField, value, "Property")</c>
+                    </item>
+                </list>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.ContractAnnotationAttribute">
+            <summary>
+                Describes dependency between method input and output
+            </summary>
+            <syntax>
+                <p>Function Definition Table syntax:</p>
+                <list>
+                    <item>FDT      ::= FDTRow [;FDTRow]*</item>
+                    <item>FDTRow   ::= Input =&gt; Output | Output &lt;= Input</item>
+                    <item>Input    ::= ParameterName: Value [, Input]*</item>
+                    <item>Output   ::= [ParameterName: Value]* {halt|stop|void|nothing|Value}</item>
+                    <item>Value    ::= true | false | null | notnull | canbenull</item>
+                </list>
+                If method has single input parameter, it's name could be omitted.<br />
+                Using <c>halt</c> (or <c>void</c>/<c>nothing</c>, which is the same)
+                for method output means that the methos doesn't return normally.<br />
+                <c>canbenull</c> annotation is only applicable for output parameters.<br />
+                You can use multiple <c>[ContractAnnotation]</c> for each FDT row,
+                or use single attribute with rows separated by semicolon.<br />
+            </syntax>
+            <examples>
+                <list>
+                    <item>
+                        <code>
+            [ContractAnnotation("=> halt")]
+            public void TerminationMethod()
+            </code>
+                    </item>
+                    <item>
+                        <code>
+            [ContractAnnotation("halt &lt;= condition: false")]
+            public void Assert(bool condition, string text) // regular assertion method
+            </code>
+                    </item>
+                    <item>
+                        <code>
+            [ContractAnnotation("s:null => true")]
+            public bool IsNullOrEmpty(string s) // string.IsNullOrEmpty()
+            </code>
+                    </item>
+                    <item>
+                        <code>
+            // A method that returns null if the parameter is null, and not null if the parameter is not null
+            [ContractAnnotation("null => null; notnull => notnull")]
+            public object Transform(object data) 
+            </code>
+                    </item>
+                    <item>
+                        <code>
+            [ContractAnnotation("s:null=>false; =>true,result:notnull; =>false, result:null")]
+            public bool TryParse(string s, out Person result)
+            </code>
+                    </item>
+                </list>
+            </examples>
+        </member>
+        <member name="T:JetBrains.Annotations.LocalizationRequiredAttribute">
+            <summary>
+                Indicates that marked element should be localized or not
+            </summary>
+            <example>
+                <code>
+            [LocalizationRequiredAttribute(true)]
+            public class Foo {
+              private string str = "my string"; // Warning: Localizable string
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.CannotApplyEqualityOperatorAttribute">
+            <summary>
+                Indicates that the value of the marked type (or its derivatives)
+                cannot be compared using '==' or '!=' operators and <c>Equals()</c>
+                should be used instead. However, using '==' or '!=' for comparison
+                with <c>null</c> is always permitted.
+            </summary>
+            <example>
+                <code>
+            [CannotApplyEqualityOperator]
+            class NoEquality { }
+            class UsesNoEquality {
+              public void Test() {
+                var ca1 = new NoEquality();
+                var ca2 = new NoEquality();
+                if (ca1 != null) { // OK
+                  bool condition = ca1 == ca2; // Warning
+                }
+              }
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.BaseTypeRequiredAttribute">
+            <summary>
+                When applied to a target attribute, specifies a requirement for any type marked
+                with the target attribute to implement or inherit specific type or types.
+            </summary>
+            <example>
+                <code>
+            [BaseTypeRequired(typeof(IComponent)] // Specify requirement
+            public class ComponentAttribute : Attribute { }
+            [Component] // ComponentAttribute requires implementing IComponent interface
+            public class MyComponent : IComponent { }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.UsedImplicitlyAttribute">
+            <summary>
+                Indicates that the marked symbol is used implicitly
+                (e.g. via reflection, in external library), so this symbol
+                will not be marked as unused (as well as by other usage inspections)
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.MeansImplicitUseAttribute">
+            <summary>
+                Should be used on attributes and causes ReSharper
+                to not mark symbols marked with such attributes as unused
+                (as well as by other usage inspections)
+            </summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseKindFlags.Access">
+            <summary>Only entity marked with attribute considered used</summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseKindFlags.Assign">
+            <summary>Indicates implicit assignment to a member</summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseKindFlags.InstantiatedWithFixedConstructorSignature">
+            <summary>
+                Indicates implicit instantiation of a type with fixed constructor signature.
+                That means any unused constructor parameters won't be reported as such.
+            </summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature">
+            <summary>Indicates implicit instantiation of a type</summary>
+        </member>
+        <member name="T:JetBrains.Annotations.ImplicitUseTargetFlags">
+            <summary>
+                Specify what is considered used implicitly
+                when marked with <see cref="T:JetBrains.Annotations.MeansImplicitUseAttribute"/>
+                or <see cref="T:JetBrains.Annotations.UsedImplicitlyAttribute"/>
+            </summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseTargetFlags.Members">
+            <summary>Members of entity marked with attribute are considered used</summary>
+        </member>
+        <member name="F:JetBrains.Annotations.ImplicitUseTargetFlags.WithMembers">
+            <summary>Entity marked with attribute and all its members considered used</summary>
+        </member>
+        <member name="T:JetBrains.Annotations.PublicAPIAttribute">
+            <summary>
+                This attribute is intended to mark publicly available API
+                which should not be removed and so is treated as used
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.InstantHandleAttribute">
+            <summary>
+                Tells code analysis engine if the parameter is completely handled
+                when the invoked method is on stack. If the parameter is a delegate,
+                indicates that delegate is executed while the method is executed.
+                If the parameter is an enumerable, indicates that it is enumerated
+                while the method is executed
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.PureAttribute">
+            <summary>
+                Indicates that a method does not make any observable state changes.
+                The same as <c>System.Diagnostics.Contracts.PureAttribute</c>
+            </summary>
+            <example>
+                <code>
+            [Pure] private int Multiply(int x, int y) { return x * y; }
+            public void Foo() {
+              const int a = 2, b = 2;
+              Multiply(a, b); // Waring: Return value of pure method is not used
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.PathReferenceAttribute">
+            <summary>
+                Indicates that a parameter is a path to a file or a folder
+                within a web project. Path can be relative or absolute,
+                starting from web root (~)
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcActionAttribute">
+            <summary>
+                ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
+                is an MVC action. If applied to a method, the MVC action name is calculated
+                implicitly from the context. Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcAreaAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC area.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcControllerAttribute">
+            <summary>
+                ASP.NET MVC attribute. If applied to a parameter, indicates that
+                the parameter is an MVC controller. If applied to a method,
+                the MVC controller name is calculated implicitly from the context.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcMasterAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC Master.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Controller.View(String, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcModelTypeAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC model type.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Controller.View(String, Object)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcPartialViewAttribute">
+            <summary>
+                ASP.NET MVC attribute. If applied to a parameter, indicates that
+                the parameter is an MVC partial view. If applied to a method,
+                the MVC partial view name is calculated implicitly from the context.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcSupressViewErrorAttribute">
+            <summary>
+                ASP.NET MVC attribute. Allows disabling all inspections
+                for MVC views within a class or a method.
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcDisplayTemplateAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC display template.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcEditorTemplateAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC editor template.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcTemplateAttribute">
+            <summary>
+                ASP.NET MVC attribute. Indicates that a parameter is an MVC template.
+                Use this attribute for custom wrappers similar to
+                <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcViewAttribute">
+            <summary>
+                ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter
+                is an MVC view. If applied to a method, the MVC view name is calculated implicitly
+                from the context. Use this attribute for custom wrappers similar to
+                <c>System.Web.Mvc.Controller.View(Object)</c>
+            </summary>
+        </member>
+        <member name="T:JetBrains.Annotations.AspMvcActionSelectorAttribute">
+            <summary>
+                ASP.NET MVC attribute. When applied to a parameter of an attribute,
+                indicates that this parameter is an MVC action name
+            </summary>
+            <example>
+                <code>
+            [ActionName("Foo")]
+            public ActionResult Login(string returnUrl) {
+              ViewBag.ReturnUrl = Url.Action("Foo"); // OK
+              return RedirectToAction("Bar"); // Error: Cannot resolve action
+            }
+            </code>
+            </example>
+        </member>
+        <member name="T:JetBrains.Annotations.RazorSectionAttribute">
+            <summary>
+                Razor attribute. Indicates that a parameter or a method is a Razor section.
+                Use this attribute for custom wrappers similar to
+                <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>
+            </summary>
+        </member>
+        <member name="T:CupCake.Host.CupCakeClient">
+            <summary>
+            Class CupCakeClient.
+            Use this client to host CupCake in your own application.
+            </summary>
+        </member>
+        <member name="M:CupCake.Host.CupCakeClient.#ctor(System.ComponentModel.Composition.Primitives.ComposablePartCatalog[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:CupCake.Host.CupCakeClient"/> class.
+            Automatically adds the current assembly and every assembly with the format "CupCake.*.dll".
+            </summary>
+            <param name="catalog">The ComposablePartCatalog array that contains zero or more items to add to the catalog.</param>
+        </member>
+        <member name="M:CupCake.Host.CupCakeClient.Start(PlayerIOClient.Connection)">
+            <summary>
+            Starts CupCake and sets the connection to the given one.
+            </summary>
+            <param name="connection">The connection.</param>
+            <exception cref="T:System.ArgumentNullException">connection</exception>
+        </member>
+        <member name="M:CupCake.Host.CupCakeClient.Start">
+            <summary>
+            Starts the client.
+            Obsolete. Use the overload with Connection parameter.
+            </summary>
+            <exception cref="T:System.NotSupportedException">Please provide the connection parameter</exception>
+        </member>
+        <member name="T:CupCake.Command`1">
+            <summary>
+            Class Command.
+            Represents a CupCake command.
+            </summary>
+            <typeparam name="TProtocol">The type of the protocol.</typeparam>
+        </member>
+        <member name="T:CupCake.CupCakeMuffinPart`1">
+            <summary>
+            Class CupCakeMuffinPart.
+            </summary>
+            <typeparam name="TProtocol">The type of the protocol.</typeparam>
+        </member>
+        <member name="M:CupCake.CupCakeMuffinPart`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:CupCake.CupCakeMuffinPart`1"/> class.
+            </summary>
+        </member>
+        <member name="M:CupCake.CupCakeMuffinPart`1.GetTimer(System.Int32)">
+            <summary>
+            Creates a new timer with the given interval, schedules its dispose on this plugin's disable, and returns the timer.
+            </summary>
+            <param name="interval">The interval.</param>
+            <returns>The requested Timer.</returns>
+        </member>
+        <member name="M:CupCake.CupCakeMuffinPart`1.GetName">
+            <summary>
+            Gets the name displayed in chat and log messages.
+            </summary>
+            <returns>This plugin's name.</returns>
+        </member>
+        <member name="M:CupCake.CupCakeMuffinPart`1.Dispose(System.Boolean)">
+            <summary>
+            Releases unmanaged and - optionally - managed resources.
+            </summary>
+            <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.Events">
+            <summary>
+            Gets the events manager.
+            </summary>
+            <value>The events manager.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.ConnectionPlatform">
+            <summary>
+            Gets the connection platform.
+            </summary>
+            <value>The connection platform.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.SynchronizePlatform">
+            <summary>
+            Gets the synchronize platform.
+            </summary>
+            <value>The synchronize platform.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.Logger">
+            <summary>
+            Gets the logger.
+            </summary>
+            <value>The logger.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.Chatter">
+            <summary>
+            Gets the chatter.
+            </summary>
+            <value>The chatter.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.WorldService">
+            <summary>
+            Gets the world service.
+            </summary>
+            <value>The world service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.RoomService">
+            <summary>
+            Gets the room service.
+            </summary>
+            <value>The room service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.PlayerService">
+            <summary>
+            Gets the player service.
+            </summary>
+            <value>The player service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.KeyService">
+            <summary>
+            Gets the key service.
+            </summary>
+            <value>The key service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.UploadService">
+            <summary>
+            Gets the upload service.
+            </summary>
+            <value>The upload service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.PotionService">
+            <summary>
+            Gets the potion service.
+            </summary>
+            <value>The potion service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.ActionService">
+            <summary>
+            Gets the action service.
+            </summary>
+            <value>The action service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.MessageService">
+            <summary>
+            Gets the message service.
+            </summary>
+            <value>The message service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.CommandService">
+            <summary>
+            Gets the command service.
+            </summary>
+            <value>The command service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.IOService">
+            <summary>
+            Gets the io service.
+            </summary>
+            <value>The io service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.StatusService">
+            <summary>
+            Gets the status service.
+            </summary>
+            <value>The status service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.PermissionService">
+            <summary>
+            Gets the permission service.
+            </summary>
+            <value>The permission service.</value>
+        </member>
+        <member name="P:CupCake.CupCakeMuffinPart`1.StoragePlatform">
+            <summary>
+            Gets the storage platform.
+            </summary>
+            <value>The storage platform.</value>
+        </member>
+        <member name="M:CupCake.Command`1.Enable">
+            <summary>
+            Enables this instance.
+            Obsolete. You should not call Enable() on a command.
+            </summary>
+        </member>
+        <member name="M:CupCake.Command`1.CanHandle(CupCake.Command.ParsedCommand)">
+            <summary>
+            Determines whether this instance can handle the specified message.
+            </summary>
+            <param name="message">The message.</param>
+            <returns><c>true</c> if this instance can handle the specified message; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:CupCake.Command`1.ExecuteCommand(CupCake.Command.Source.IInvokeSource,CupCake.Command.ParsedCommand)">
+            <summary>
+            Executes the command.
+            </summary>
+            <param name="source">The message source.</param>
+            <param name="message">The parsed message.</param>
+        </member>
+        <member name="M:CupCake.Command`1.Run(CupCake.Command.Source.IInvokeSource,CupCake.Command.ParsedCommand)">
+            <summary>
+            This method is called whenever the command should be executed.
+            </summary>
+            <param name="source">The command source.</param>
+            <param name="message">The parsed message.</param>
+        </member>
+        <member name="P:CupCake.Command`1.Labels">
+            <summary>
+            Gets the labels list set for this command.
+            Usually set through the <see cref="T:CupCake.Command.LabelAttribute"/>.
+            </summary>
+            <value>The labels.</value>
+        </member>
+        <member name="P:CupCake.Command`1.Usages">
+            <summary>
+            Gets the usages strings set for this command.
+            Usually set through the <see cref="T:CupCake.Command.CorrectUsageAttribute"/>.
+            </summary>
+            <value>The usages.</value>
+        </member>
+        <member name="P:CupCake.Command`1.MinArgs">
+            <summary>
+            Gets or sets the minimum arguments.
+            Usually set through the <see cref="T:CupCake.Command.MinArgsAttribute"/>.
+            </summary>
+            <value>The minimum arguments.</value>
+        </member>
+        <member name="P:CupCake.Command`1.MinGroup">
+            <summary>
+            Gets or sets the minimum permission required to execute this command.
+            Usually set through the <see cref="T:CupCake.Command.MinGroupAttribute"/>.
+            </summary>
+            <value>The minimum group.</value>
+        </member>
+        <member name="P:CupCake.Command`1.HighPriority">
+            <summary>
+            Gets or sets a value indicating whether this command is executed with a higher priority.´
+            Can only be set through the <see cref="T:CupCake.Command.HighPriorityAttribute"/> or the constructor, changing this value later has no effect.
+            </summary>
+            <value><c>true</c> if [high priority]; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="T:CupCake.CupCakeMuffin">
+            <summary>
+            Class CupCakeMuffin.
+            </summary>
+        </member>
+        <member name="T:CupCake.CupCakeMuffin`1">
+            <summary>
+            Class CupCakeMuffin.
+            </summary>
+            <typeparam name="TProtocol">The type of the protocol.</typeparam>
+        </member>
+        <member name="T:CupCake.InvokeSourceExtensions">
+            <summary>
+            Class InvokeSourceExtensions.
+            </summary>
+        </member>
+        <member name="M:CupCake.InvokeSourceExtensions.Reply(CupCake.Command.Source.IInvokeSource,System.String,System.Object[])">
+            <summary>
+            Replies the specified chat message to the invoke source.
+            </summary>
+            <param name="invokeSource">The invoke source.</param>
+            <param name="message">The chat message.</param>
+            <param name="args">The object array that contains zero or more items to format.</param>
+        </member>
+    </members>
+</doc>
