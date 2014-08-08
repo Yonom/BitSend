@@ -40,12 +40,7 @@ namespace BitSend
 
                 // Copy the data
                 while (writePointer < writeCount)
-                {
-                    vector[1 << writePointer] = a[readPointer];
-
-                    readPointer++;
-                    writePointer++;
-                }
+                    vector[1 << writePointer++] = a[readPointer++];
 
                 // Add whitespace
                 writePointer++; // Leave one bit free
@@ -66,13 +61,13 @@ namespace BitSend
             lock (this._lockObj)
             {
                 this.SendPacket((int)packet);
-                WaitOne();
             }
         }
         
         private void SendPacket(int packet)
         {
             this._connection.Send("c", packet, 0, 0);
+            WaitOne();
         }
 
         public void Send(byte[] bytes)
@@ -90,10 +85,7 @@ namespace BitSend
 
                     // Send packets
                     while (this._pointer < this._chunk.Count)
-                    {
                         this.SendPacket((int)this._chunk[this._pointer++]);
-                        WaitOne();
-                    }
 
                     // Wait until the last message arrives
                     this._resetEvent.WaitOne(1000);

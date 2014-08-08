@@ -31,7 +31,7 @@ namespace BitSend
                 {
                     ChunkPacket pointerPacket = chunk[i - 1];
                     var pointer = (int)(pointerPacket & ~(ChunkPacket.Data));
-                    if (pointer < 0 || pointer > i) // i - 1 because every restore message is two packets long
+                    if (pointer < 0 || pointer >= i - 1) // i - 1 because every restore message is two packets long
                         throw new InvalidDataException("Received invalid pointer.");
 
                     // Change the packet type to data
@@ -59,18 +59,11 @@ namespace BitSend
                 var vector = new BitVector32((int)packet);
 
                 // Find the starting point of the data
-                while (vector[1 << readCount--])
-                {
-                }
+                while (vector[1 << readCount--]) { }
 
                 // Copy the data
                 while (readPointer <= readCount)
-                {
-                    a[writePointer] = vector[1 << readPointer];
-
-                    readPointer++;
-                    writePointer++;
-                }
+                    a[writePointer++] = vector[1 << readPointer++];
             }
 
             return a.ToByteArray().Take(writePointer + 1 >> 3).ToArray();

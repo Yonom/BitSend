@@ -6,7 +6,6 @@ namespace BitSend
 {
     public class BitSendClient
     {
-        private readonly Connection _connection;
         private readonly int _myUserId;
         private readonly ReceiveManager _receiveManager = new ReceiveManager();
         private readonly SendManager _sendManager;
@@ -14,10 +13,9 @@ namespace BitSend
 
         public BitSendClient(Connection connection, int myUserId)
         {
+            connection.OnMessage += this._connection_OnMessage;
             this._sendManager = new SendManager(connection);
-            this._connection = connection;
             this._myUserId = myUserId;
-            this._connection.OnMessage += this._connection_OnMessage;
             this._sendManager.Send(Packet.Hai);
         }
 
@@ -28,14 +26,16 @@ namespace BitSend
 
         private void _connection_OnMessage(object sender, Message e)
         {
-            if (e.Type == "c")
+            switch (e.Type)
             {
-                Console.WriteLine("c = {}" + e.GetInt(1));
-                this.OnCoin(e.GetInt(0), e.GetInt(1));
-            }
-            else if (e.Type == "left")
-            {
-                this.OnLeft(e.GetInt(0));
+                case "c":
+                    Console.WriteLine("c = {}" + e.GetInt(1));
+                    this.OnCoin(e.GetInt(0), e.GetInt(1));
+                    break;
+
+                case "left":
+                    this.OnLeft(e.GetInt(0));
+                    break;
             }
         }
 
@@ -74,6 +74,7 @@ namespace BitSend
                     {
                         this._sendManager.HandlePacket((ChunkPacket)packet);
                     }
+
                     break;
             }
         }
