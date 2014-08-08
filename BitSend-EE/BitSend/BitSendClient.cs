@@ -57,6 +57,7 @@ namespace BitSend
 
                 case Packet.Bai:
                     this._userManager.RemoveUser(userId);
+                    this._receiveManager.DropQueue(userId);
                     break;
 
                 case Packet.StartChunk:

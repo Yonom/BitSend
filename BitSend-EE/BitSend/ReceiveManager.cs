@@ -71,8 +71,13 @@ namespace BitSend
                 return new byte[0];
 
             var value = ParseChunk(this._chunks[userId]);
-            this._chunks.Remove(userId);
+            this.DropQueue(userId);
             return value;
+        }
+
+        public void DropQueue(int userId)
+        {
+            this._chunks.Remove(userId);
         }
     }
 }
