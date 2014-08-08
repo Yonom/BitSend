@@ -27,22 +27,26 @@ X: Data.
 
 ## Repair packets
 
-If a packet goes missing, a repair packet pair can be sent. The first packet will be an int (max value (2 ^ 31) - 3) determining at which position the packet must be inserted.
+If a packet goes missing, a repair packet pair can be sent. The first packet will contain the message data.
+The second packet will be an int (max value (2 ^ 31) - 33) determining at which position the packet must be inserted.
 Once a repair message has been sent, the packet counter must be subtracted by 1.
-The second packet must have its first bit unset. The message data is then sent in the same way as data packets are:
+Repair messages must be sent in ascending order.
 
-```
-00XXXXXX XXXXXXXX XXXXXXXX XXXXXXXX  
-010XXXXX XXXXXXXX XXXXXXXX XXXXXXXX  
-.....  
-```
+## Start chunk
 
-## Break chunk
-
-A break chunk message has a value of -1.
+A start chunk message has a value of -1. It should be sent before starting to send the message data.
 
 ```
 111111111 11111111 11111111 11111111
+```
+
+
+## End chunk
+
+A end chunk message has a value of -2.
+
+```
+111111111 11111111 11111111 11111110
 ```
 
 ## Hai packets
@@ -63,10 +67,10 @@ If a client receives a hai packet. It should respond with a hey packet. The hey 
 
 ## Bai packets
 
-If a BitSend client no longer wishes to use the protocol, it should send a bai packet. It has a value of -2.
+If a BitSend client no longer wishes to use the protocol, it should send a bai packet. It has a value of (2^31)-3 = 2,147,483,645.
 
 ```
-111111111 11111111 11111111 11111110
+011111111 11111111 11111111 11111101
 ```
 
 # Processing chunks
