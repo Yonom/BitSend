@@ -21,7 +21,7 @@ namespace BitSend
                     if (pointer < 0 || pointer >= i - 1) // i - 1 because every restore message is two packets long
                         throw new InvalidDataException("Received invalid pointer.");
 
-                    var packet = chunk[i - 1];
+                    int packet = chunk[i - 1];
                     chunk.RemoveAt(i);
                     chunk.RemoveAt(i - 1);
                     chunk.Insert(pointer, packet); // This insert makes up for the skiping of the pointer
@@ -43,7 +43,9 @@ namespace BitSend
                 var vector = new BitVector32(packet);
 
                 // Find the starting point of the data
-                while (vector[1 << readCount--]) { }
+                while (vector[1 << readCount--])
+                {
+                }
 
                 // Copy the data
                 while (readPointer <= readCount)
@@ -70,7 +72,7 @@ namespace BitSend
             if (!this._chunks.ContainsKey(userId))
                 return new byte[0];
 
-            var value = ParseChunk(this._chunks[userId]);
+            byte[] value = ParseChunk(this._chunks[userId]);
             this.DropQueue(userId);
             return value;
         }

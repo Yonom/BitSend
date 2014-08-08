@@ -1,15 +1,30 @@
-﻿using System;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using PlayerIOClient;
 
 namespace BitSend
 {
     public delegate void UserEventHandler(int userId);
+
     public delegate void MessageEventHandler(int userId, byte[] data);
 
     public class BitSendClient
     {
+        private readonly int _myUserId;
+        private readonly ReceiveManager _receiveManager = new ReceiveManager();
+        private readonly SendManager _sendManager;
+        private readonly UserManager _userManager = new UserManager();
+
+        public BitSendClient(Connection connection, int myUserId)
+        {
+            connection.OnMessage += this._connection_OnMessage;
+            this._userManager.Add += this.OnAdd;
+            this._userManager.Remove += this.OnRemove;
+
+            this._sendManager = new SendManager(connection);
+            this._myUserId = myUserId;
+            this._sendManager.Send(Packet.Hai);
+        }
+
         public event MessageEventHandler Message;
 
         protected virtual void OnMessage(int userid, byte[] data)
@@ -17,7 +32,7 @@ namespace BitSend
             MessageEventHandler handler = this.Message;
             if (handler != null) handler(userid, data);
         }
-        
+
         public event UserEventHandler Add;
 
         protected virtual void OnAdd(int userid)
@@ -32,22 +47,6 @@ namespace BitSend
         {
             UserEventHandler handler = this.Remove;
             if (handler != null) handler(userid);
-        }
-
-        private readonly int _myUserId;
-        private readonly SendManager _sendManager;
-        private readonly ReceiveManager _receiveManager = new ReceiveManager();
-        private readonly UserManager _userManager = new UserManager();
-
-        public BitSendClient(Connection connection, int myUserId)
-        {
-            connection.OnMessage += this._connection_OnMessage;
-            this._userManager.Add += this.OnAdd;
-            this._userManager.Remove += this.OnRemove;
-
-            this._sendManager = new SendManager(connection);
-            this._myUserId = myUserId;
-            this._sendManager.Send(Packet.Hai);
         }
 
         public void Send(byte[] bytes)

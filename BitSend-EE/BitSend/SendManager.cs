@@ -15,8 +15,8 @@ namespace BitSend
         private bool[] _check;
         private List<int> _chunk;
         private int _lastPos;
-        private int _pointer;
         private int _offsetAdd;
+        private int _pointer;
 
         public SendManager(Connection connection)
         {
@@ -59,7 +59,7 @@ namespace BitSend
                 this.SendPacket((int)packet);
             }
         }
-        
+
         private void SendPacket(int packet)
         {
             this._connection.Send("c", packet, 0, 0);

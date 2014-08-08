@@ -4,6 +4,7 @@ namespace BitSend
 {
     internal class UserManager
     {
+        private readonly HashSet<int> _users = new HashSet<int>();
         public event UserEventHandler Add;
 
         protected virtual void OnAdd(int userid)
@@ -20,12 +21,10 @@ namespace BitSend
             if (handler != null) handler(userid);
         }
 
-        private readonly HashSet<int> _users = new HashSet<int>();
-
         public void AddUser(int userId)
         {
             if (this._users.Add(userId))
-                OnAdd(userId);
+                this.OnAdd(userId);
         }
 
         public void RemoveUser(int userId)
