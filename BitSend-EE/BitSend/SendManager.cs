@@ -74,6 +74,7 @@ namespace BitSend
         {
             lock (this._lockObj)
             {
+                this._offsetAdd = 0;
                 this._chunk = this.Parse(bytes);
                 while (this._chunk.Count > 0)
                 {
@@ -81,7 +82,6 @@ namespace BitSend
                     this._check = new bool[this._chunk.Count];
                     this._pointer = 0;
                     this._lastPos = 0;
-                    this._offsetAdd = 0;
 
                     // Send packets
                     while (this._pointer < this._chunk.Count)
@@ -120,7 +120,7 @@ namespace BitSend
 
         private static void WaitOne()
         {
-            Thread.Sleep(5);
+            Thread.Sleep(10);
         }
 
         private static Chunk GetRepairChunk(Chunk chunk, bool[] check, ref int offsetAdd)

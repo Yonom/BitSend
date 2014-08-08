@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using System.Threading;
 using PlayerIOClient;
 
 namespace BitSend
@@ -46,7 +47,7 @@ namespace BitSend
             {
                 case Packet.Hai:
                     if (userId == this._myUserId) break;
-                    this._sendManager.Send(Packet.Hey);
+                    ThreadPool.QueueUserWorkItem(o => this._sendManager.Send(Packet.Hey));
                     goto case Packet.Hey;
 
                 case Packet.Hey:
