@@ -25,18 +25,15 @@ namespace BitSend
             // Inserts all missed packets
             for (int i = chunk.Count - 1; i >= 0; i--)
             {
-                ChunkPacket packet = chunk[i];
-                ChunkPacket type = packet.GetPacketType();
+                ChunkPacket pointerPacket = chunk[i];
+                ChunkPacket type = pointerPacket.GetPacketType();
                 if (type == ChunkPacket.Restore)
                 {
-                    ChunkPacket pointerPacket = chunk[i - 1];
-                    var pointer = (int)(pointerPacket & ~(ChunkPacket.Data));
+                    var pointer = (int)pointerPacket;
                     if (pointer < 0 || pointer >= i - 1) // i - 1 because every restore message is two packets long
                         throw new InvalidDataException("Received invalid pointer.");
 
-                    // Change the packet type to data
-                    if (pointerPacket.GetPacketType() == ChunkPacket.Data)
-                        packet |= ChunkPacket.Data;
+                    ChunkPacket packet = chunk[i - 1];
 
                     chunk.RemoveAt(i);
                     chunk.RemoveAt(i - 1);

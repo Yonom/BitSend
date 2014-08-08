@@ -112,6 +112,7 @@ namespace BitSend
                     // If this was the last message sent, stop waiting.
                     if (this._chunk.Count - 1 == i)
                         this._resetEvent.Set();
+
                     return;
                 }
             }
@@ -119,7 +120,7 @@ namespace BitSend
 
         private static void WaitOne()
         {
-            Thread.Sleep(10);
+            Thread.Sleep(5);
         }
 
         private static Chunk GetRepairChunk(Chunk chunk, bool[] check, ref int offsetAdd)
@@ -128,15 +129,11 @@ namespace BitSend
             for (int i = 0; i < chunk.Count; i++)
             {
                 if (check[i]) continue;
-                ChunkPacket data = chunk[i];
 
-                ChunkPacket repairPos = (ChunkPacket)i + offsetAdd--;
-                if (data.GetPacketType() == ChunkPacket.Data)
-                    repairPos |= ChunkPacket.Data;
-                repairChunk.Add(repairPos);
-
-                ChunkPacket repairPacket = chunk[i] & ~ChunkPacket.Data; // Remove the data flag
+                ChunkPacket repairPacket = chunk[i];
                 repairChunk.Add(repairPacket);
+                ChunkPacket repairPos = (ChunkPacket)i + offsetAdd--;
+                repairChunk.Add(repairPos);
             }
             offsetAdd += chunk.Count;
             return repairChunk;
