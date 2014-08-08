@@ -74,11 +74,11 @@ namespace BitSend
                 default:
                     if (this._userManager.Contains(userId))
                     {
-                        this._receiveManager.HandlePacket(userId, (ChunkPacket)packet);
+                        this._receiveManager.HandlePacket(userId, coins);
                     }
                     else if (userId == this._myUserId)
                     {
-                        this._sendManager.HandlePacket((ChunkPacket)packet);
+                        this._sendManager.HandlePacket(coins);
                     }
 
                     break;

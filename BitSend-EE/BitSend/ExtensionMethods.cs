@@ -4,6 +4,8 @@ namespace BitSend
 {
     internal static class ExtensionMethods
     {
+        public const int DataMask = 1 << 31;
+
         public static byte[] ToByteArray(this BitArray bits)
         {
             int numBytes = bits.Count / 8;
@@ -28,11 +30,9 @@ namespace BitSend
             return bytes;
         }
 
-        public static ChunkPacket GetPacketType(this ChunkPacket packet)
+        public static bool IsDataPacket(this int packet)
         {
-            return (packet & ChunkPacket.Data) == ChunkPacket.Data
-                ? ChunkPacket.Data
-                : ChunkPacket.Restore;
+            return (packet & DataMask) == DataMask;
         }
     }
 }

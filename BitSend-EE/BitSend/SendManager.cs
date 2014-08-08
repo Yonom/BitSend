@@ -32,8 +32,7 @@ namespace BitSend
             while (readPointer < a.Length)
             {
                 int writeCount = a.Length - readPointer;
-                if (writeCount > 30)
-                    writeCount = 30;
+                if (writeCount > 30) writeCount = 30;
 
                 int writePointer = 0;
                 var vector = new BitVector32();
@@ -43,14 +42,10 @@ namespace BitSend
                     vector[1 << writePointer++] = a[readPointer++];
 
                 // Add whitespace
-                writePointer++; // Leave one bit free
-                while (writePointer <= 31)
-                {
+                while (writePointer++ <= 30)
                     vector[1 << writePointer] = true;
-                    writePointer++;
-                }
 
-                chunk.Add((ChunkPacket)vector.Data);
+                chunk.Add(vector.Data);
             }
 
             return chunk;
@@ -88,7 +83,7 @@ namespace BitSend
 
                     // Send packets
                     while (this._pointer < this._chunk.Count)
-                        this.SendPacket((int)this._chunk[this._pointer++]);
+                        this.SendPacket(this._chunk[this._pointer++]);
 
                     // Wait until the last message arrives
                     this._resetEvent.WaitOne(1000);
@@ -102,7 +97,7 @@ namespace BitSend
             }
         }
 
-        public void HandlePacket(ChunkPacket packet)
+        public void HandlePacket(int packet)
         {
             if (this._chunk == null) return;
             for (int i = this._lastPos; i <= this._pointer; i++)
@@ -133,9 +128,9 @@ namespace BitSend
             {
                 if (check[i]) continue;
 
-                ChunkPacket repairPacket = chunk[i];
+                int repairPacket = chunk[i];
                 repairChunk.Add(repairPacket);
-                ChunkPacket repairPos = (ChunkPacket)i + offsetAdd--;
+                int repairPos = i + offsetAdd--;
                 repairChunk.Add(repairPos);
             }
             offsetAdd += chunk.Count;

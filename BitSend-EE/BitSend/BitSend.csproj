@@ -46,7 +46,6 @@
     <Compile Include="BitSendClient.cs" />
     <Compile Include="Chunk.cs" />
     <Compile Include="ReceiveManager.cs" />
-    <Compile Include="ChunkPacket.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Packet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

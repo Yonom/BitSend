@@ -15,16 +15,13 @@ namespace BitSend
         {
             for (int i = chunk.Count - 1; i >= 0; i--)
             {
-                ChunkPacket pointerPacket = chunk[i];
-                ChunkPacket type = pointerPacket.GetPacketType();
-                if (type == ChunkPacket.Restore)
+                int pointer = chunk[i];
+                if (!pointer.IsDataPacket())
                 {
-                    var pointer = (int)pointerPacket;
                     if (pointer < 0 || pointer >= i - 1) // i - 1 because every restore message is two packets long
                         throw new InvalidDataException("Received invalid pointer.");
 
-                    ChunkPacket packet = chunk[i - 1];
-
+                    var packet = chunk[i - 1];
                     chunk.RemoveAt(i);
                     chunk.RemoveAt(i - 1);
                     chunk.Insert(pointer, packet); // This insert makes up for the skiping of the pointer
@@ -39,11 +36,11 @@ namespace BitSend
             int writePointer = 0;
             var a = new BitArray(chunk.Count * 30); // Max possible amount (30 bits per packet)
 
-            foreach (ChunkPacket packet in chunk)
+            foreach (int packet in chunk)
             {
                 int readCount = 30;
                 int readPointer = 0;
-                var vector = new BitVector32((int)packet);
+                var vector = new BitVector32(packet);
 
                 // Find the starting point of the data
                 while (vector[1 << readCount--]) { }
@@ -56,7 +53,7 @@ namespace BitSend
             return a.ToByteArray().Take(writePointer + 1 >> 3).ToArray();
         }
 
-        public void HandlePacket(int userId, ChunkPacket packet)
+        public void HandlePacket(int userId, int packet)
         {
             if (this._chunks.ContainsKey(userId))
                 this._chunks[userId].Add(packet);
