@@ -5,16 +5,46 @@ using PlayerIOClient;
 
 namespace BitSend
 {
+    public delegate void UserEventHandler(int userId);
+    public delegate void MessageEventHandler(int userId, byte[] data);
+
     public class BitSendClient
     {
+        public event MessageEventHandler Message;
+
+        protected virtual void OnMessage(int userid, byte[] data)
+        {
+            MessageEventHandler handler = this.Message;
+            if (handler != null) handler(userid, data);
+        }
+        
+        public event UserEventHandler Add;
+
+        protected virtual void OnAdd(int userid)
+        {
+            UserEventHandler handler = this.Add;
+            if (handler != null) handler(userid);
+        }
+
+        public event UserEventHandler Remove;
+
+        protected virtual void OnRemove(int userid)
+        {
+            UserEventHandler handler = this.Remove;
+            if (handler != null) handler(userid);
+        }
+
         private readonly int _myUserId;
-        private readonly ReceiveManager _receiveManager = new ReceiveManager();
         private readonly SendManager _sendManager;
+        private readonly ReceiveManager _receiveManager = new ReceiveManager();
         private readonly UserManager _userManager = new UserManager();
 
         public BitSendClient(Connection connection, int myUserId)
         {
             connection.OnMessage += this._connection_OnMessage;
+            this._userManager.Add += this.OnAdd;
+            this._userManager.Remove += this.OnRemove;
+
             this._sendManager = new SendManager(connection);
             this._myUserId = myUserId;
             this._sendManager.Send(Packet.Hai);
@@ -30,7 +60,6 @@ namespace BitSend
             switch (e.Type)
             {
                 case "c":
-                    Console.WriteLine("c = {}" + e.GetInt(1));
                     this.OnCoin(e.GetInt(0), e.GetInt(1));
                     break;
 
@@ -68,8 +97,7 @@ namespace BitSend
                 case Packet.EndChunk:
                     if (!this._userManager.Contains(userId)) break;
                     byte[] bytes = this._receiveManager.EndChunk(userId);
-                    string str = Encoding.Unicode.GetString(bytes);
-                    Console.WriteLine(str);
+                    this.OnMessage(userId, bytes);
                     break;
 
                 default:
