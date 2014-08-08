@@ -69,7 +69,10 @@ namespace BitSend
         {
             if (!this._chunks.ContainsKey(userId))
                 return new byte[0];
-            return ParseChunk(this._chunks[userId]);
+
+            var value = ParseChunk(this._chunks[userId]);
+            this._chunks.Remove(userId);
+            return value;
         }
     }
 }
