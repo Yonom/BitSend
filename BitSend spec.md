@@ -8,7 +8,7 @@ A chunk is a byte array sent over the BitSend protocol. Chunks can be as big as 
 
 # Packets
 
-Messages are sent in packets. There are 6 types of packets. Each packet has 4 bytes.
+Infrmation is sent through packets. Each packet has 4 bytes. The way packets are transported is implementation dependent.
 
 ## Data packets
 
