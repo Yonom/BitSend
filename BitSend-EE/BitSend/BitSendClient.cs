@@ -59,9 +59,14 @@ namespace BitSend
                     this._userManager.RemoveUser(userId);
                     break;
 
-                case Packet.BreakChunk:
+                case Packet.StartChunk:
                     if (!this._userManager.Contains(userId)) break;
-                    byte[] bytes = this._receiveManager.BreakChunk(userId);
+                    this._receiveManager.StartChunk(userId);
+                    break;
+
+                case Packet.EndChunk:
+                    if (!this._userManager.Contains(userId)) break;
+                    byte[] bytes = this._receiveManager.EndChunk(userId);
                     string str = Encoding.Unicode.GetString(bytes);
                     Console.WriteLine(str);
                     break;

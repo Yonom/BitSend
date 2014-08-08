@@ -2,10 +2,10 @@
 {
     internal enum Packet
     {
-        Chunk = 0,
-        BreakChunk = -1,
-        Bai = -2,
-        Hai = ~ChunkPacket.Data,
-        Hey = ~ChunkPacket.Data - 1
+        StartChunk = -1,
+        EndChunk = -2,
+        Hai = 1 << 31 - 1,
+        Hey = 1 << 31 - 2,
+        Bai = 1 << 31 - 3,
     }
 }

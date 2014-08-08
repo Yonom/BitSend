@@ -10,19 +10,9 @@ namespace BitSend
     {
         private readonly Dictionary<int, Chunk> _chunks = new Dictionary<int, Chunk>();
 
-        private Chunk GetChunk(int userId)
-        {
-            if (this._chunks.ContainsKey(userId))
-                return this._chunks[userId];
-
-            var chunk = new Chunk();
-            this._chunks.Add(userId, chunk);
-            return chunk;
-        }
-
+        // Inserts all missed packets
         private static void RepairChunk(Chunk chunk)
         {
-            // Inserts all missed packets
             for (int i = chunk.Count - 1; i >= 0; i--)
             {
                 ChunkPacket pointerPacket = chunk[i];
@@ -68,12 +58,21 @@ namespace BitSend
 
         public void HandlePacket(int userId, ChunkPacket packet)
         {
-            this.GetChunk(userId).Add(packet);
+            if (this._chunks.ContainsKey(userId))
+                this._chunks[userId].Add(packet);
         }
 
-        public byte[] BreakChunk(int userId)
+        public void StartChunk(int userId)
         {
-            return ParseChunk(this.GetChunk(userId));
+            var chunk = new Chunk();
+            this._chunks.Add(userId, chunk);
+        }
+
+        public byte[] EndChunk(int userId)
+        {
+            if (!this._chunks.ContainsKey(userId))
+                return new byte[0];
+            return ParseChunk(this._chunks[userId]);
         }
     }
 }

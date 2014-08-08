@@ -74,6 +74,9 @@ namespace BitSend
         {
             lock (this._lockObj)
             {
+                // Mark the start of the chunk.
+                this.SendPacket((int)Packet.StartChunk);
+
                 this._offsetAdd = 0;
                 this._chunk = this.Parse(bytes);
                 while (this._chunk.Count > 0)
@@ -95,7 +98,7 @@ namespace BitSend
                 }
 
                 // Mark the end of the chunk.
-                this.SendPacket((int)Packet.BreakChunk);
+                this.SendPacket((int)Packet.EndChunk);
             }
         }
 
