@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using PlayerIOClient;
 
 namespace BitSend
@@ -6,6 +7,8 @@ namespace BitSend
     public delegate void UserEventHandler(int userId);
 
     public delegate void MessageEventHandler(int userId, byte[] data);
+
+    public delegate void StatusEventHandler(int current, int total);
 
     public class BitSendClient
     {
@@ -16,13 +19,30 @@ namespace BitSend
 
         public BitSendClient(Connection connection, int myUserId)
         {
+            if (!BitConverter.IsLittleEndian)
+                throw new NotSupportedException("BitSendClient only supports little endian machines.");
+
+            if (connection == null)
+                throw new ArgumentNullException("connection");
+
+            if (myUserId <= 0)
+                throw new ArgumentException("The provided myUserId is invalid.");
+
+            this._sendManager = new SendManager(connection);
+
             connection.OnMessage += this._connection_OnMessage;
             this._userManager.Add += this.OnAdd;
             this._userManager.Remove += this.OnRemove;
+            this._sendManager.Status += this.OnStatus;
 
-            this._sendManager = new SendManager(connection);
             this._myUserId = myUserId;
             this._sendManager.Send(Packet.Hai);
+        }
+
+        public bool IsEnabled
+        {
+            get { return this._sendManager.IsEnabled; }
+            set { this._sendManager.IsEnabled = value; }
         }
 
         public event MessageEventHandler Message;
@@ -49,9 +69,17 @@ namespace BitSend
             if (handler != null) handler(userid);
         }
 
-        public void Send(byte[] bytes)
+        public event StatusEventHandler Status;
+
+        protected virtual void OnStatus(int current, int total)
         {
-            this._sendManager.Send(bytes);
+            StatusEventHandler handler = this.Status;
+            if (handler != null) handler(current, total);
+        }
+
+        public bool Send(byte[] bytes)
+        {
+            return this._sendManager.Send(bytes);
         }
 
         private void _connection_OnMessage(object sender, Message e)

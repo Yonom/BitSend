@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Threading;
 using PlayerIOClient;
 
@@ -14,6 +15,7 @@ namespace BitSend
 
         private bool[] _check;
         private List<int> _chunk;
+        private bool _isEnabled = true;
         private int _lastPos;
         private int _offsetAdd;
         private int _pointer;
@@ -21,6 +23,27 @@ namespace BitSend
         public SendManager(Connection connection)
         {
             this._connection = connection;
+        }
+
+        public bool IsEnabled
+        {
+            get { return this._isEnabled; }
+            set
+            {
+                this._isEnabled = value;
+
+                this.Send(value
+                    ? Packet.Hey
+                    : Packet.Bai);
+            }
+        }
+
+        public event StatusEventHandler Status;
+
+        protected virtual void OnStatus(int current, int total)
+        {
+            StatusEventHandler handler = this.Status;
+            if (handler != null) handler(current, total);
         }
 
         private List<int> Parse(byte[] bytes)
@@ -66,7 +89,7 @@ namespace BitSend
             WaitOne();
         }
 
-        public void Send(byte[] bytes)
+        public bool Send(byte[] bytes)
         {
             lock (this._lockObj)
             {
@@ -84,7 +107,13 @@ namespace BitSend
 
                     // Send packets
                     while (this._pointer < this._chunk.Count)
+                    {
+                        if (!this._connection.Connected || !this.IsEnabled)
+                            return false;
+
+                        this.Status(this._pointer, this._chunk.Count);
                         this.SendPacket(this._chunk[this._pointer++]);
+                    }
 
                     // Wait until the last message arrives
                     this._resetEvent.WaitOne(1000);
@@ -96,6 +125,8 @@ namespace BitSend
                 // Mark the end of the chunk.
                 this.SendPacket((int)Packet.EndChunk);
             }
+
+            return true;
         }
 
         public void HandlePacket(int packet)
@@ -133,6 +164,10 @@ namespace BitSend
                 repairChunk.Add(repairPacket);
                 int repairPos = i + offsetAdd--;
                 repairChunk.Add(repairPos);
+
+                const int maxPos = 1 << 31 - 33;
+                if (repairPos > maxPos)
+                    throw new InternalBufferOverflowException("Reached the maximum chunk size limit.");
             }
             offsetAdd += chunk.Count;
             return repairChunk;
