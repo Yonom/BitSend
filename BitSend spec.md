@@ -8,7 +8,7 @@ A chunk is a byte array sent over the BitSend protocol. Chunks can be as big as 
 
 # Packets
 
-Infrmation is sent through packets. Each packet has 4 bytes. The way packets are transported is implementation dependent.
+Information is sent through packets. Each packet has 4 bytes. The way packets are transported is implementation dependent.
 
 ## Data packets
 
@@ -74,7 +74,8 @@ If a BitSend client no longer wishes to use the protocol, it should send a bai p
 ```
 
 # Processing chunks
-Before the sender sends a break chunk message, it must make sure that all packets have been sent sucessfully or have been repaired. Once the receiver receives the break chunk message, it can start parsing it.
+Before the sender sends a break chunk message, it must make sure that all packets have been sent successfully or have been repaired. Once the receiver receives the break chunk message, it can start parsing it.
 There are two steps in this process:
-First, packets are analyzed backwards. Once the client hits a repair message. It will insert that message in the position specified. 
+First, packets are analyzed backwards. Once the client hits a repair message. It will insert that message in the position specified.
+
 Once all packets have been repaired, the receiver adds all received bits together to generate a byte array.
