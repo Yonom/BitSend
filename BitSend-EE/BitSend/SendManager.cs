@@ -132,7 +132,7 @@ namespace BitSend
         public void HandlePacket(int packet)
         {
             if (this._chunk == null) return;
-            for (int i = this._lastPos; i <= this._pointer; i++)
+            for (int i = this._lastPos; i <= this._pointer - 1; i++)
             {
                 if (this._chunk[i] == packet && !this._check[i])
                 {
